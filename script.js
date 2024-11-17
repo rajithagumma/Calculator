@@ -28,6 +28,7 @@ buttons.forEach(function (button){
             }
             else if (value==="="){
                 evaluateResult();
+                currentValue=""
             }
             else{
             currentValue+=value;
