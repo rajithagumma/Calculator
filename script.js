@@ -18,47 +18,66 @@ function evaluateResult(){
     return result;
 
 }
-currentValue=""
+currentValue="";
+let result1=""
 buttons.forEach(function (button){
     button.addEventListener("click",()=>{
         const value=button.innerText;
         try {
-            if (value==="AC"){
+            if (currentValue[currentValue.length-1]==="="){
+                if (!isNaN(value)){
+                    currentValue = value;
+                    display.value=currentValue;
+                }
+                else{
+                    if (value==="AC"){
+                        currentValue="";
+                        display.value=currentValue;
+                    }
+                    else{
+                        currentValue = result1+value;
+                        display.value=currentValue;
+                    }
+                    
+                }
+            }
+            else if (value==="AC"){
                 currentValue="";
                 display.value=currentValue;
             }
             else if (value==="="){
-                currentValue=evaluateResult();
+                result1=evaluateResult();
+                currentValue=currentValue+"="
         
+            }
+            else if (value==="Del"){
+                currentValue = currentValue.slice(0, currentValue.length - 1);
+                display.value=currentValue;
             }
             else{
                 let lastele=currentValue[currentValue.length-1]
                 if (value==="+" || value==="-" || value==="×" || value==="÷" || value==="√" || value==="%"){
                     if (isNaN(lastele)){
                         currentValue = currentValue.slice(0, currentValue.length - 1)+value;
-                        console.log(currentValue)
+
 
                     }
                     else{
                         currentValue+=value;
-                        console.log(currentValue)
-
- 
                     }
 
             }
             else{
                 currentValue+=value;
-                console.log(currentValue)
 
             }
-            // console.log(currentValue)
             display.value=currentValue;
             }  
         } catch (error){
             console.log(error);
             currentValue="ERROR";
             display.value=currentValue;
+            currentValue=""
         }
 
     })
